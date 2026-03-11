@@ -588,22 +588,35 @@ header.scrolled {
     text-transform: uppercase;
 }
 
-.hero-stats {
-    display: flex;
-    gap: 4rem;
-    margin-bottom: 3rem;
+.cinematic-typing {
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+    border-right: 3px solid var(--primary);
+    width: 0;
+    animation: 
+        typing 3.5s steps(50, end) forwards,
+        blink-caret 0.75s step-end infinite,
+        cinematic-glow 2s ease-in-out infinite;
+    animation-delay: 1s;
 }
 
-.stat-box h2 {
-    font-size: 3rem;
-    margin-bottom: 0.5rem;
+@keyframes typing {
+    from { width: 0 }
+    to { width: 100% }
 }
 
-.stat-box p {
-    font-family: var(--font-mono);
-    color: var(--text-muted);
-    font-size: 0.85rem;
+@keyframes blink-caret {
+    from, to { border-color: transparent }
+    50% { border-color: var(--primary) }
 }
+
+@keyframes cinematic-glow {
+    0%, 100% { text-shadow: 0 0 5px var(--primary); opacity: 0.8; }
+    50% { text-shadow: 0 0 15px var(--primary), 0 0 20px var(--secondary); opacity: 1; }
+}
+
+
 
 .hero-actions {
     display: flex;
