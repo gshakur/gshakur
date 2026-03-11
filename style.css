@@ -237,42 +237,32 @@ header.scrolled {
     padding: 0 5%;
 }
 
-.brand-logo {
-    height: 40px;
-    transition: transform var(--transition-fast);
-}
-
-.brand-logo:hover {
-    transform: scale(1.05);
-}
-
-.brand-text {
-    font-family: var(--font-heading);
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--text);
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    background: linear-gradient(135deg, var(--primary), var(--secondary));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    transition: var(--transition-fast);
-}
-
-.brand-text:hover {
-    opacity: 0.8;
-}
-
-.nav-controls {
+.logo-link {
+    flex: 1;
     display: flex;
     align-items: center;
-    gap: 2rem;
+    color: var(--primary);
+    transition: var(--transition-base);
+}
+
+.logo-link:hover {
+    color: var(--secondary);
+    transform: scale(1.1) rotate(10deg);
 }
 
 .nav-links {
+    flex: 2;
     display: flex;
-    gap: 2rem;
+    justify-content: center;
+    gap: 3rem;
+}
+
+.nav-actions {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 1.5rem;
 }
 
 .nav-item {
@@ -582,9 +572,9 @@ header.scrolled {
 }
 
 .hero-title.massive-text {
-    font-size: clamp(4rem, 10vw, 8rem);
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
     line-height: 0.9;
-    letter-spacing: -3px;
+    letter-spacing: -2px;
     margin-bottom: 2rem;
     font-weight: 800;
 }
