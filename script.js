@@ -1,130 +1,139 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Smooth scrolling for navigation links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            document.querySelector(this.getAttribute('href')).scrollIntoView({
-                behavior: 'smooth'
-            });
-        });
-    });
 
-    // Intersection Observer for scroll animations
-    const observerOptions = {
-        threshold: 0.1
-    };
+    // --- 1. Navigation & Scroll Effects ---
+    const header = document.querySelector('header');
+    const sections = document.querySelectorAll('section');
+    const navItems = document.querySelectorAll('.nav-item');
 
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
+    window.addEventListener('scroll', () => {
+        // Header background on scroll
+        if (window.scrollY > 50) {
+            header.classList.add('scrolled');
+        } else {
+            header.classList.remove('scrolled');
+        }
+
+        // Active nav link on scroll
+        let current = '';
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.clientHeight;
+            if (scrollY >= (sectionTop - 200)) {
+                current = section.getAttribute('id');
             }
         });
-    }, observerOptions);
 
-    document.querySelectorAll('.section').forEach(section => {
-        section.classList.add('fade-in-section');
-        observer.observe(section);
+        navItems.forEach(item => {
+            item.classList.remove('active');
+            if (item.getAttribute('href') === `#${current}`) {
+                item.classList.add('active');
+            }
+        });
     });
 
-    // Theme Toggle Logic
-    const themeToggle = document.getElementById('theme-toggle');
-    const body = document.body;
-    const icon = themeToggle.querySelector('i');
+    // Smooth scrolling for native anchors
+    const navLinks = document.querySelector('.nav-links');
+    const hamburger = document.querySelector('.hamburger');
 
-    // Check for saved theme
-    const savedTheme = localStorage.getItem('theme');
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            const href = this.getAttribute('href');
+            if (href !== '#' && href.startsWith('#')) {
+                e.preventDefault();
+                const target = document.querySelector(href);
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                     // Close mobile menu if open
+                    if (navLinks) navLinks.classList.remove('active');
+                    if (hamburger) hamburger.classList.remove('active');
+                }
+            }
+        });
+    });
+
+    // --- 2. Theme Toggle ---
+    const themeBtn = document.getElementById('theme-toggle');
+    const themeIcon = themeBtn.querySelector('i');
+    const body = document.body;
+
+    const savedTheme = localStorage.getItem('gs-theme');
     if (savedTheme === 'light') {
-        body.classList.add('light-mode');
-        icon.classList.replace('fa-moon', 'fa-sun');
+        body.classList.add('light-theme');
+        themeIcon.className = 'fas fa-sun';
     }
 
-    themeToggle.addEventListener('click', () => {
-        body.classList.toggle('light-mode');
-
-        if (body.classList.contains('light-mode')) {
-            localStorage.setItem('theme', 'light');
-            icon.classList.replace('fa-moon', 'fa-sun');
+    themeBtn.addEventListener('click', () => {
+        body.classList.toggle('light-theme');
+        
+        if (body.classList.contains('light-theme')) {
+            localStorage.setItem('gs-theme', 'light');
+            themeIcon.className = 'fas fa-sun';
         } else {
-            localStorage.setItem('theme', 'dark');
-            icon.classList.replace('fa-sun', 'fa-moon');
+            localStorage.setItem('gs-theme', 'dark');
+            themeIcon.className = 'fas fa-moon';
         }
     });
 
-    // Mobile Menu Toggle (Basic implementation)
-    const hamburger = document.querySelector('.hamburger');
-    const navLinks = document.querySelector('.nav-links');
+    // --- 3. Mobile Menu ---
+    const menuToggle = document.querySelector('.menu-toggle');
 
-    hamburger.addEventListener('click', () => {
-        navLinks.classList.toggle('active');
-        // Add minimal animation styles for mobile menu here or in CSS
-        if (navLinks.classList.contains('active')) {
-            navLinks.style.display = 'flex';
-            navLinks.style.flexDirection = 'column';
-            navLinks.style.position = 'absolute';
-            navLinks.style.top = '70px';
-            navLinks.style.right = '5%';
-            navLinks.style.background = 'var(--bg-color)';
-            navLinks.style.padding = '2rem';
-            navLinks.style.border = '1px solid var(--glass-border)';
-            navLinks.style.borderRadius = '16px';
-            navLinks.style.zIndex = '1000';
-        } else {
-            navLinks.style.display = 'none';
-        }
-    });
-    // Contact Form Handling
+    if(menuToggle) {
+        menuToggle.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navLinks.classList.toggle('active');
+        });
+    }
+
+    // --- 4. Contact Form ---
     const contactForm = document.getElementById('contact-form');
     const formStatus = document.getElementById('form-status');
 
     if (contactForm) {
         contactForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-            const formData = new FormData(contactForm);
-
-            // Show loading state (optional: visual feedback on button)
+            
             const submitBtn = contactForm.querySelector('button[type="submit"]');
-            const originalBtnText = submitBtn.innerText;
-            submitBtn.innerText = 'Sending...';
+            const btnSpan = submitBtn.querySelector('span');
+            const originalText = btnSpan.innerText;
+            
+            btnSpan.innerText = 'Sending...';
             submitBtn.disabled = true;
+            submitBtn.style.opacity = '0.7';
 
             try {
+                const formData = new FormData(contactForm);
                 const response = await fetch(contactForm.action, {
                     method: 'POST',
                     body: formData,
-                    headers: {
-                        'Accept': 'application/json'
-                    }
+                    headers: { 'Accept': 'application/json' }
                 });
 
                 if (response.ok) {
-                    formStatus.className = 'success-message';
-                    formStatus.innerText = "Thanks! Your message has been sent successfully.";
+                    formStatus.className = 'success-msg';
+                    formStatus.innerText = "Message sent successfully! I'll be in touch soon.";
                     contactForm.reset();
                 } else {
                     const data = await response.json();
+                    formStatus.className = 'error-msg';
                     if (Object.hasOwn(data, 'errors')) {
-                        formStatus.className = 'error-message';
-                        formStatus.innerText = data["errors"].map(error => error["message"]).join(", ");
+                        formStatus.innerText = data["errors"].map(err => err["message"]).join(", ");
                     } else {
-                        formStatus.className = 'error-message';
-                        formStatus.innerText = "Oops! There was a problem sending your form.";
+                        formStatus.innerText = "There was a problem. Please try again later.";
                     }
                 }
             } catch (error) {
-                formStatus.className = 'error-message';
-                formStatus.innerText = "Oops! There was a problem sending your form.";
+                formStatus.className = 'error-msg';
+                formStatus.innerText = "Network error. Please try again.";
             } finally {
-                submitBtn.innerText = originalBtnText;
+                btnSpan.innerText = originalText;
                 submitBtn.disabled = false;
+                submitBtn.style.opacity = '1';
 
-                // Clear message after 5 seconds
                 setTimeout(() => {
-                    formStatus.style.display = 'none';
                     formStatus.className = '';
                     formStatus.innerText = '';
-                    // Reset display style managed by CSS class/inline
-                    formStatus.removeAttribute('style');
                 }, 5000);
             }
         });
