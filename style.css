@@ -1,29 +1,29 @@
 /* === CSS Variables & Base Setup === */
 :root {
-    --bg-dark: #050505;
+    --bg-dark: #000000;
     --bg-light: #ffffff;
-    
+
     --text-dark: #f0f0f0;
-    --text-light: #050505;
+    --text-light: #000000;
     --text-muted-dark: #888888;
     --text-muted-light: #666666;
-    
-    --glass-bg-dark: rgba(255, 255, 255, 0.03);
+
+    --glass-bg-dark: rgba(255, 255, 255, 0.02);
     --glass-bg-light: rgba(0, 0, 0, 0.03);
-    
+
     --glass-border-dark: rgba(255, 255, 255, 0.08);
     --glass-border-light: rgba(0, 0, 0, 0.08);
-    
+
     --glass-blur: 12px;
-    
+
     --font-heading: 'Syne', sans-serif;
     --font-body: 'Space Grotesk', sans-serif;
     --font-mono: 'Space Mono', monospace;
-    
+
     --transition-fast: 0.2s cubic-bezier(0.25, 1, 0.5, 1);
     --transition-base: 0.4s cubic-bezier(0.25, 1, 0.5, 1);
     --transition-slow: 0.8s cubic-bezier(0.25, 1, 0.5, 1);
-    
+
     --container-width: 1280px;
     --section-spacing: 120px;
 }
@@ -38,7 +38,7 @@ body {
     --primary: #00f3ff;
     --secondary: #00ff88;
     --accent: #00f3ff;
-    --btn-text: #050505;
+    --btn-text: #000000;
 }
 
 /* Light Theme Variables */
@@ -137,7 +137,12 @@ body::before {
 }
 
 /* === Typography === */
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     font-family: var(--font-heading);
     font-weight: 700;
     line-height: 1.1;
@@ -273,7 +278,8 @@ header.scrolled {
     opacity: 0.8;
 }
 
-.nav-item:hover, .nav-item.active {
+.nav-item:hover,
+.nav-item.active {
     opacity: 1;
     color: var(--primary);
 }
@@ -289,7 +295,8 @@ header.scrolled {
     transition: var(--transition-base);
 }
 
-.nav-item:hover::after, .nav-item.active::after {
+.nav-item:hover::after,
+.nav-item.active::after {
     width: 100%;
 }
 
@@ -360,7 +367,8 @@ header.scrolled {
     transition: var(--transition-fast);
 }
 
-.hamburger::before, .hamburger::after {
+.hamburger::before,
+.hamburger::after {
     content: '';
     position: absolute;
     width: 100%;
@@ -369,8 +377,13 @@ header.scrolled {
     transition: var(--transition-fast);
 }
 
-.hamburger::before { top: -8px; }
-.hamburger::after { bottom: -8px; }
+.hamburger::before {
+    top: -8px;
+}
+
+.hamburger::after {
+    bottom: -8px;
+}
 
 /* === Common Elements === */
 .glass-panel {
@@ -467,9 +480,17 @@ header.scrolled {
 }
 
 @keyframes pulse {
-    0% { box-shadow: 0 0 0 0 rgba(0, 243, 255, 0.4); }
-    70% { box-shadow: 0 0 0 10px rgba(0, 243, 255, 0); }
-    100% { box-shadow: 0 0 0 0 rgba(0, 243, 255, 0); }
+    0% {
+        box-shadow: 0 0 0 0 rgba(0, 243, 255, 0.4);
+    }
+
+    70% {
+        box-shadow: 0 0 0 10px rgba(0, 243, 255, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(0, 243, 255, 0);
+    }
 }
 
 /* === Hero Section === */
@@ -527,8 +548,13 @@ header.scrolled {
 }
 
 @keyframes drift {
-    0% { transform: translate(0, 0) scale(1); }
-    100% { transform: translate(50px, 50px) scale(1.2); }
+    0% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    100% {
+        transform: translate(50px, 50px) scale(1.2);
+    }
 }
 
 .hero-bg-grid {
@@ -539,7 +565,7 @@ header.scrolled {
     height: 100%;
     background-size: 40px 40px;
     background-image: linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-                      linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
     z-index: 0;
 }
 
@@ -572,7 +598,7 @@ header.scrolled {
 }
 
 .hero-title.massive-text {
-    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-size: clamp(2rem, 5vw, 3.5rem);
     line-height: 0.9;
     letter-spacing: -2px;
     margin-bottom: 2rem;
@@ -594,7 +620,7 @@ header.scrolled {
     white-space: nowrap;
     border-right: 3px solid var(--primary);
     width: 0;
-    animation: 
+    animation:
         typing 3.5s steps(50, end) forwards,
         blink-caret 0.75s step-end infinite,
         cinematic-glow 2s ease-in-out infinite;
@@ -602,18 +628,39 @@ header.scrolled {
 }
 
 @keyframes typing {
-    from { width: 0 }
-    to { width: 100% }
+    from {
+        width: 0
+    }
+
+    to {
+        width: 100%
+    }
 }
 
 @keyframes blink-caret {
-    from, to { border-color: transparent }
-    50% { border-color: var(--primary) }
+
+    from,
+    to {
+        border-color: transparent
+    }
+
+    50% {
+        border-color: var(--primary)
+    }
 }
 
 @keyframes cinematic-glow {
-    0%, 100% { text-shadow: 0 0 5px var(--primary); opacity: 0.8; }
-    50% { text-shadow: 0 0 15px var(--primary), 0 0 20px var(--secondary); opacity: 1; }
+
+    0%,
+    100% {
+        text-shadow: 0 0 5px var(--primary);
+        opacity: 0.8;
+    }
+
+    50% {
+        text-shadow: 0 0 15px var(--primary), 0 0 20px var(--secondary);
+        opacity: 1;
+    }
 }
 
 
@@ -636,8 +683,15 @@ header.scrolled {
 }
 
 @keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-15px); }
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-15px);
+    }
 }
 
 .scroll-indicator {
@@ -680,8 +734,15 @@ header.scrolled {
 }
 
 @keyframes scroll-wheel {
-    0% { transform: translate(-50%, 0); opacity: 1; }
-    100% { transform: translate(-50%, 15px); opacity: 0; }
+    0% {
+        transform: translate(-50%, 0);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translate(-50%, 15px);
+        opacity: 0;
+    }
 }
 
 .section-header {
@@ -1032,8 +1093,17 @@ body.light-theme .input-group textarea {
     font-weight: 500;
 }
 
-.success-msg { background: rgba(0, 243, 255, 0.1); color: var(--primary); border: 1px solid var(--primary); }
-.error-msg { background: rgba(255, 0, 85, 0.1); color: var(--accent); border: 1px solid var(--accent); }
+.success-msg {
+    background: rgba(0, 243, 255, 0.1);
+    color: var(--primary);
+    border: 1px solid var(--primary);
+}
+
+.error-msg {
+    background: rgba(255, 0, 85, 0.1);
+    color: var(--accent);
+    border: 1px solid var(--accent);
+}
 
 /* === Footer === */
 .site-footer {
@@ -1104,11 +1174,11 @@ body.light-theme .input-group textarea {
     .cards-grid {
         grid-template-columns: repeat(2, 1fr);
     }
-    
+
     .contact-wrapper {
         grid-template-columns: 1fr;
     }
-    
+
     .contact-info {
         border-right: none;
         border-bottom: 1px solid var(--glass-border);
@@ -1150,7 +1220,7 @@ body.light-theme .input-group textarea {
         gap: 2.5rem;
         transition: var(--transition-base);
         z-index: 1000;
-        box-shadow: -10px 0 30px rgba(0,0,0,0.3);
+        box-shadow: -10px 0 30px rgba(0, 0, 0, 0.3);
         border-left: 1px solid var(--glass-border);
     }
 
@@ -1167,7 +1237,8 @@ body.light-theme .input-group textarea {
     }
 
     .btn-resume {
-        display: none; /* Move to mobile menu if needed, or hide to save space */
+        display: none;
+        /* Move to mobile menu if needed, or hide to save space */
     }
 
     .menu-toggle {
@@ -1190,20 +1261,27 @@ body.light-theme .input-group textarea {
     }
 
     .hero-title.massive-text {
-        font-size: clamp(2.5rem, 15vw, 4rem);
+        font-size: clamp(1.5rem, 10vw, 2.5rem);
         letter-spacing: -1px;
         line-height: 1;
     }
 
     .hero-tagline.mono-text {
-        font-size: 0.75rem;
-        letter-spacing: 2px;
+        font-size: clamp(0.4rem, 2.4vw, 0.75rem);
+        letter-spacing: 0.5px;
         margin-bottom: 3rem;
-        width: 100%;
-        text-align: center;
-        white-space: normal;
-        border-right: none;
-        animation: none;
+        width: 0;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        overflow: hidden;
+        white-space: nowrap;
+        border-right: 3px solid var(--primary);
+        animation:
+            typing 3.5s steps(50, end) forwards,
+            blink-caret 0.75s step-end infinite,
+            cinematic-glow 2s ease-in-out infinite;
+        animation-delay: 0.5s;
     }
 
     .hero-actions {
@@ -1226,7 +1304,9 @@ body.light-theme .input-group textarea {
         text-align: center;
     }
 
-    .skills-showcase, .contact-info, .contact-form-container {
+    .skills-showcase,
+    .contact-info,
+    .contact-form-container {
         padding: 2rem;
     }
 
@@ -1256,10 +1336,12 @@ body.light-theme .input-group textarea {
     }
 
     .orb-3 {
-        display: none; /* Hide 3rd orb on mobile to save performance/space */
+        display: none;
+        /* Hide 3rd orb on mobile to save performance/space */
     }
 
     .minimal-header .section-title::after {
-        width: 100px; /* Shorten line on mobile */
+        width: 100px;
+        /* Shorten line on mobile */
     }
 }
